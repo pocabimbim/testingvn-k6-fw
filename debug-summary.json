@@ -1,0 +1,47 @@
+{
+  "metricCount": 30,
+  "metricNames": [
+    "checks",
+    "data_received",
+    "data_sent",
+    "group_duration",
+    "grp_cnt_Browse_Homepage",
+    "grp_cnt_Click_on_Shop_Now_button",
+    "grp_cnt_Sign_In",
+    "grp_cnt_View_Product",
+    "grp_dur_Browse_Homepage",
+    "grp_dur_Click_on_Shop_Now_button",
+    "grp_dur_Sign_In",
+    "grp_dur_View_Product",
+    "grp_err_Browse_Homepage",
+    "grp_err_Click_on_Shop_Now_button",
+    "grp_err_Sign_In",
+    "grp_err_View_Product",
+    "http_req_blocked",
+    "http_req_connecting",
+    "http_req_duration",
+    "http_req_duration{expected_response:true}",
+    "http_req_failed",
+    "http_req_receiving",
+    "http_req_sending",
+    "http_req_tls_handshaking",
+    "http_req_waiting",
+    "http_reqs",
+    "iteration_duration",
+    "iterations",
+    "vus",
+    "vus_max"
+  ],
+  "taggedCount": 1,
+  "taggedSample": {
+    "http_req_duration{expected_response:true}": {
+      "type": "trend",
+      "values": "avg,min,med,max,p(90),p(95)",
+      "contains": "time"
+    }
+  },
+  "reqDurNames": [],
+  "httpReqTagged": [
+      "http_req_duration{expected_response:true}"
+    ]
+}

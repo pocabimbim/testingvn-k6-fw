@@ -1,0 +1,75 @@
+/**
+ * run-register.js - Run the User Registration Test with 2 VUs
+ * 
+ * To run: k6 run run-register.js
+ */
+
+import { UserRegistrationTest } from './tests/index.js';
+import { GroupReportHelper } from './utils/index.js';
+
+// ============================================================
+// 1. CONFIGURATION
+// ============================================================
+
+// Configure for 2 VUs running the registration flow
+export const options = {
+  vus: 2,
+  iterations: 2,
+  thresholds: {
+    http_req_duration: ['p(95)<5000'],
+    http_req_failed: ['rate<0.10'],
+  },
+  tags: {
+    framework: 'k6-oop',
+    test: 'user-registration',
+    environment: 'staging',
+  },
+};
+
+// ============================================================
+// 2. TEST INSTANTIATION
+// ============================================================
+
+// Create registration test instance targeting the SUT
+const registrationTest = new UserRegistrationTest({
+  baseURL: 'https://tvn-sut.info',
+  thinkTime: 1,
+});
+
+// ============================================================
+// 3. EXPORT FOR K6
+// ============================================================
+
+// Export setup function (runs once per test)
+export function setup() {
+  console.log('=== User Registration Test Setup ===');
+  console.log('Running with 2 VUs');
+
+  registrationTest.setup();
+
+  return {
+    startedAt: new Date().toISOString(),
+  };
+}
+
+// Export default function (runs for each VU/iteration)
+export default function (data) {
+  registrationTest.run();
+}
+
+// Export teardown function (runs once after test)
+export function teardown(data) {
+  console.log('=== User Registration Test Teardown ===');
+  registrationTest.teardown();
+  console.log(`Test started at: ${data.startedAt}`);
+  console.log('Test completed successfully');
+}
+
+// Export handleSummary function (runs after test to generate reports)
+export function handleSummary(data) {
+  return GroupReportHelper.generateWithGroupMetrics(data, {
+    title: 'User Registration Test - 2 VUs',
+    theme: 'bootstrap',
+    filename: 'register-report.html',
+  });
+}
